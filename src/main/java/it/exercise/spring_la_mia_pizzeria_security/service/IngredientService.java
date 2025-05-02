@@ -1,0 +1,44 @@
+package it.exercise.spring_la_mia_pizzeria_security.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import it.exercise.spring_la_mia_pizzeria_security.model.Ingredient;
+import it.exercise.spring_la_mia_pizzeria_security.model.Pizza;
+import it.exercise.spring_la_mia_pizzeria_security.repository.IngredientRepository;
+
+@Service
+public class IngredientService {
+
+    @Autowired
+    private IngredientRepository ingredientRepo;
+
+    public List<Ingredient> findIngredientList() {
+        return ingredientRepo.findAll();
+    }
+
+    public Ingredient save(Ingredient ingredient) {
+        return ingredientRepo.save(ingredient);
+    }
+
+    public void delete(Integer id) {
+
+        Ingredient ingredient = ingredientRepo.findById(id).get();
+
+        for (Pizza p : ingredient.getPizzas()) {
+            p.getIngredients().remove(ingredient);
+        }
+
+        ingredientRepo.deleteById(id);
+    }
+
+    public Ingredient edit(Integer id, Ingredient ingredient) {
+
+        Ingredient vecchioIngredient = ingredientRepo.findById(id).get();
+        vecchioIngredient.setIngredient(ingredient.getIngredient());
+
+        return ingredientRepo.save(vecchioIngredient);
+    }
+}
