@@ -20,7 +20,7 @@
     <main class="container mb-5">
 
         <div class="my-3 d-flex justify-content-between">
-            <a class="btn btn-warning border border-black" th:href="@{/pizzas/create}">Aggiungi Pizza</a>
+            <a class="btn btn-warning border border-black" th:href="@{/pizzas/create}" sec:authorize="hasAuthority('ADMIN')">Aggiungi Pizza</a>
             
             <form th:action="@{/pizzas}" method="get">
                 <div class="input-group">
@@ -51,8 +51,8 @@
                     <li th:text="|€ ${pizza.price}|"></li>
                 </ul>
                 <div class="card-body d-flex align-items-center">
-                    <a th:href="@{|/pizzas/edit/${pizza.id}|}" class="btn btn-success me-1"><i class="bi bi-pencil"></i></a>
-                    <form action="#" th:action="@{'/pizzas/delete/{id}'(id=${pizza.id})}" method="post">
+                    <a th:href="@{|/pizzas/edit/${pizza.id}|}" class="btn btn-success me-1" sec:authorize="hasAuthority('ADMIN')"><i class="bi bi-pencil"></i></a>
+                    <form action="#" th:action="@{'/pizzas/delete/{id}'(id=${pizza.id})}" method="post" sec:authorize="hasAuthority('ADMIN')">
                         <button class="btn btn-danger" type="submit" id="submitButton" onclick="return confirm('Sicuro di voler eliminare questa pizza?')"><i class="bi bi-trash"></i></button>
                     </form>
                     <a th:href="@{|/pizzas/show/${pizza.id}|}" class="btn btn-warning ms-auto">Dettagli <i class="bi bi-arrow-right"></i></a>

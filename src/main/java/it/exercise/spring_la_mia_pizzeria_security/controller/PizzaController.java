@@ -3,6 +3,7 @@ package it.exercise.spring_la_mia_pizzeria_security.controller;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,9 +32,11 @@ public class PizzaController {
     private IngredientRepository ingredientRepository;
 
     @GetMapping
-    public String index(Model model, @RequestParam(name = "keyword", required = false) String name) {
+    public String index(Authentication authentication, Model model,
+            @RequestParam(name = "keyword", required = false) String name) {
 
         model.addAttribute("list", pizzaService.findPizza(name));
+        model.addAttribute("username", authentication.getName());
 
         return "pizzas/index";
     }
@@ -42,7 +45,7 @@ public class PizzaController {
     public String show(@PathVariable("id") Integer id, Model model) {
 
         Optional<Pizza> optPizza = pizzaService.findById(id);
-
+        
         if (optPizza.isPresent()) {
             model.addAttribute("pizza", optPizza.get());
             return "/pizzas/show";

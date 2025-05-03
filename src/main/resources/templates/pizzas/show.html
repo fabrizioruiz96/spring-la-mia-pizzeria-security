@@ -33,7 +33,7 @@
 
             <div class="col d-flex align-items-center">
                 <h3>Promo</h3>
-                <a class="btn btn-warning border border-black ms-auto" th:href="@{|/pizzas/${pizza.id}/promo|}">
+                <a class="btn btn-warning border border-black ms-auto" th:href="@{|/pizzas/${pizza.id}/promo|}" sec:authorize="hasAuthority('ADMIN')">
                     <i class="bi bi-plus-lg"></i> Aggiungi Promo</a>
             </div>
             <hr class="mt-1">
@@ -46,7 +46,7 @@
                             <th>Data Inizio</th>
                             <th>Data Fine</th>
                             <th>Dettagli</th>
-                            <th><!-- Colonna per la modifica --></th>
+                            <th sec:authorize="hasAuthority('ADMIN')"><!-- Colonna per la modifica --></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -55,7 +55,7 @@
                             <td th:text="${promo.dateStart}"></td>
                             <td th:text="${promo.dateEnd}"></td>
                             <td th:text="${promo.detail}"></td>
-                            <td>
+                            <td sec:authorize="hasAuthority('ADMIN')">
                                 <a class="btn btn-sm btn-success" th:href="@{|/promos/edit/${promo.id}|}"><i
                                         class="bi bi-pencil"></i></a>
                             </td>

@@ -17,13 +17,22 @@
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/pizzas}">Le nostre pizze</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
                         <a class="nav-link" th:href="@{/pizzas/create}">Aggiungi Pizza</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
                         <a class="nav-link" th:href="@{/ingredients}">Crea Ingredienti</a>
                     </li>
                 </ul>
+            </div>
+            <div class="text-light d-flex align-items-center">
+                <div class="mx-3">
+                    <div>Utente: <span sec:authentication="name"></span></div>
+                    <div>Ruolo: <span sec:authentication="principal.authorities"></span></div>
+                </div>  
+                <div>
+                    <a class="btn btn-sm btn-danger" href="/logout">LOGOUT</a>
+                </div>
             </div>
         </div>
     </nav>
